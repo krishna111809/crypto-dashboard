@@ -1,7 +1,14 @@
 import React from "react";
 
-const HighlightItem = ({ coin, value, isPercentage = false, isPositive = true }) => (
-  <li className="list-group-item d-flex justify-content-between align-items-center">
+const HighlightItem = ({ coin, value, isPercentage = false, isPositive = true, onCoinClick }) => (
+  <li 
+    className="list-group-item d-flex justify-content-between align-items-center list-group-item-action"
+    onClick={() => onCoinClick(coin.id)}
+    onKeyDown={(e) => e.key === 'Enter' && onCoinClick(coin.id)}
+    style={{ cursor: 'pointer' }}
+    role="button"
+    tabIndex="0"
+  >
     <div>
       <img src={coin.image} alt={coin.name} width="20" className="me-2" />
       {coin.name}
@@ -12,8 +19,9 @@ const HighlightItem = ({ coin, value, isPercentage = false, isPositive = true })
   </li>
 );
 
-export default function Highlights({ coins }) {
+export default function Highlights({ coins, onCoinClick }) {
   if (!coins.length) {
+    // ... skeleton loader remains the same
     return (
       <div className="card">
         <div className="card-body">
@@ -59,6 +67,7 @@ export default function Highlights({ coins }) {
               value={c.price_change_percentage_24h?.toFixed(2)} 
               isPercentage 
               isPositive 
+              onCoinClick={onCoinClick}
             />
           ))}
         </ul>
@@ -74,6 +83,7 @@ export default function Highlights({ coins }) {
               value={c.price_change_percentage_24h?.toFixed(2)} 
               isPercentage 
               isPositive={false} 
+              onCoinClick={onCoinClick}
             />
           ))}
         </ul>
@@ -88,6 +98,7 @@ export default function Highlights({ coins }) {
               coin={c} 
               value={`$${c.total_volume?.toLocaleString()}`} 
               isPositive
+              onCoinClick={onCoinClick}
             />
           ))}
         </ul>

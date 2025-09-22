@@ -127,7 +127,7 @@ function App() {
           </main>
           
           <aside className="col-lg-4 mt-4 mt-lg-0">
-            <Highlights coins={coins} />
+            <Highlights coins={coins} onCoinClick={setSelectedCoinId}/>
           </aside>
         </div>
 
